@@ -292,7 +292,7 @@ class ExpDockWidget(QtGui.QDockWidget):
             COMMIT_MESSAGE = 'comment from python script'
             repo.git.add(update=True)
             repo.index.commit(COMMIT_MESSAGE)
-            origin = repo.remote(name='git')
+            origin = repo.remote(name='origin')
             origin.push()
         except:
             print('Some error occured while pushing the code')  
