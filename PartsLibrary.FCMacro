@@ -296,7 +296,7 @@ class ExpDockWidget(QtGui.QDockWidget):
             origin.push()
         except:
             print('Some error occured while pushing the code')  
-        #print("finish")
+        print("Finishd push to Origin")
         #repo.git.push()
         #modified_files = [f for f in repo.git.diff("--name-only").split("\n") if (f and (f != 'PartsLibrary.FCMacro'))]
         ##print(modified_files)
