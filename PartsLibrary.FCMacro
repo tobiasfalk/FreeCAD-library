@@ -287,24 +287,34 @@ class ExpDockWidget(QtGui.QDockWidget):
                     Mesh.export(toexport,STLfilename)
                     
     def pushlibrary(self):
-        modified_files = [f for f in repo.git.diff("--name-only").split("\n") if (f and (f != 'PartsLibrary.FCMacro'))]
-        #print(modified_files)
-        untracked_files = [f for f in repo.git.ls_files("--other","--exclude-standard").split("\n") if f]
-        #print(untracked_files)
-        import ArchServer
-        d = ArchServer._ArchGitDialog()
-        d.label.setText(str(len(modified_files)+len(untracked_files))+" new and modified file(s)")
-        d.lineEdit.setText("Changed " + str(modified_files))
-        d.checkBox.hide()
-        d.radioButton.hide()
-        d.radioButton_2.hide()
-        r = d.exec_()
-        if r:
-            for o in modified_files + untracked_files:
-                repo.git.add(o)
-            repo.git.commit(m=d.lineEdit.text())
-            if d.checkBox.isChecked():
-                repo.git.push()
+        try:
+            #repo = Repo(PATH_OF_GIT_REPO)
+            COMMIT_MESSAGE = 'comment from python script'
+            repo.git.add(update=True)
+            repo.index.commit(COMMIT_MESSAGE)
+            origin = repo.remote(name='git')
+            origin.push()
+        except:
+            print('Some error occured while pushing the code')  
+        #repo.git.push()
+        #modified_files = [f for f in repo.git.diff("--name-only").split("\n") if (f and (f != 'PartsLibrary.FCMacro'))]
+        ##print(modified_files)
+        #untracked_files = [f for f in repo.git.ls_files("--other","--exclude-standard").split("\n") if f]
+        ##print(untracked_files)
+        #import ArchServer
+        #d = ArchServer._ArchGitDialog()
+        #d.label.setText(str(len(modified_files)+len(untracked_files))+" new and modified file(s)")
+        #d.lineEdit.setText("Changed " + str(modified_files))
+        #d.checkBox.hide()
+        #d.radioButton.hide()
+        #d.radioButton_2.hide()
+        #r = d.exec_()
+        #if r:
+            #for o in modified_files + untracked_files:
+                #repo.git.add(o)
+            #repo.git.commit(m=d.lineEdit.text())
+            #if d.checkBox.isChecked():
+                #repo.git.push()
                 
     def updatelibrary(self):
         repo.git.pull()
