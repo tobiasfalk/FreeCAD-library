@@ -289,7 +289,7 @@ class ExpDockWidget(QtGui.QDockWidget):
     def pushlibrary(self):
         try:
             #repo = Repo(PATH_OF_GIT_REPO)
-            COMMIT_MESSAGE = 'comment from python script'
+            COMMIT_MESSAGE = 'comment from FreeCAD script'
             repo.git.add('--all')
             repo.index.commit(COMMIT_MESSAGE)
             origin = repo.remote(name='origin')
